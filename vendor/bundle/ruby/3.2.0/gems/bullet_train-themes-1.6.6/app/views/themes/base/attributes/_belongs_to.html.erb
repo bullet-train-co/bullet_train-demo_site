@@ -1,0 +1,14 @@
+<% object ||= current_attributes_object %>
+<% strategy ||= current_attributes_strategy || :none %>
+<% disable_link ||= false %>
+<% url ||= nil %>
+
+<% if object.public_send(attribute).present? %>
+  <%= render 'shared/attributes/attribute', object: object, attribute: attribute, strategy: strategy, url: url do %>
+    <% if disable_link %>
+      <%= object.public_send(attribute).label_string %>
+    <% else %>
+      <%= link_to object.public_send(attribute).label_string, url || [:account, object.public_send(attribute)] %>
+    <% end %>
+  <% end %>
+<% end %>

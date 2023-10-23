@@ -1,0 +1,90 @@
+<%
+%i[label field error help after_help].each do |key|
+  if (content = content_for(key).presence)
+    flush_content_for key
+    partial.section key, content
+  end
+end
+%>
+
+<%
+form ||= current_fields_form
+# returns a struct with `label`, `placeholder`, and `help` methods.
+labels = labels_for(form, method)
+options ||= {}
+options[:id] ||= form.field_id(method)
+# options[:disabled] ||= !field_editable?(form.object, method) if user_signed_in?
+options[:placeholder] ||= labels.placeholder if labels.placeholder
+
+other_options ||= {}
+other_options[:help] = [other_options[:help], labels.help].compact.join(" ")
+
+if !other_options.key?(:required)
+  other_options[:required] = options.fetch(:required) { presence_validated?(form.object, method) }
+end
+
+if other_options[:required]
+  options[:"aria-required"] = true
+end
+
+errors = [method, method.to_s.gsub(/_id$/, '').to_sym].uniq.map { |attribute| form.object.errors.full_messages_for(attribute) }.flatten
+has_errors = errors.any? || partial.error? || other_options[:error].present?
+
+options[:class] = "#{options[:class]} block w-full rounded-md shadow-sm font-light text-sm dark:bg-slate-800 dark:text-slate-300"
+
+options[:class] += if has_errors
+  " pr-10 border-red-500 text-red-900 placeholder-red-500 outline-none focus:ring-red-500 focus:border-red-500 dark:text-slate-300"
+else
+  " focus:ring-primary-500 focus:border-primary-500 border-slate-300 dark:border-slate-900"
+end
+
+%>
+
+<div class="<%= 'required' if other_options[:required] %>">
+
+  <% # the label. %>
+  <% unless other_options[:hide_label] == true %>
+    <% if partial.label? %>
+      <%= partial.label %>
+    <% else %>
+      <% # allow the label to be defined via an inline option or else one of the locale yaml definitions. %>
+      <% label = (other_options[:label].presence || labels.label || legacy_label_for(form, method)) %>
+      <%= form.label method, label&.html_safe, class: 'block', for: options[:id] %>
+    <% end %>
+  <% end %>
+
+  <div class="mt-1.5">
+    <% # the actual field. %>
+    <% if partial.field? %>
+      <%= partial.field %>
+    <% else %>
+      <% # e.g. form.text_field(method, options) %>
+      <%= form.send(helper, method, options) %>
+    <% end %>
+  </div>
+
+  <% # any error messages. %>
+  <% if has_errors %>
+    <p class="mt-1.5 text-xs text-red-500">
+      <%= errors.map { |error| error + ". " }.join %>
+      <%= partial.error %>
+      <% if other_options[:hide_custom_error].blank? %>
+        <%= other_options[:error]&.html_safe %>
+      <% end %>
+    </p>
+  <% end %>
+
+  <% # any help text. %>
+  <% if partial.help? || other_options[:help].present? || partial.after_help? %>
+    <p class="mt-1.5 text-xs text-slate-500 dark:text-slate-400">
+      <%= partial.help %>
+      <%= other_options[:help]&.html_safe %>
+      <%= partial.after_help %>
+    </p>
+  <% end %>
+
+  <% if other_options[:icon] %>
+  <div class="pre-icon os-icon <%= other_options[:icon] %>"></div>
+  <% end %>
+
+</div>

@@ -1,0 +1,77 @@
+/teams:
+  get:
+    tags:
+      - Team
+    summary: "List Teams"
+    operationId: listTeams
+    parameters:
+      - $ref: "#/components/parameters/after"
+    responses:
+      "404":
+        description: "Not Found"
+      "200":
+        description: "OK"
+        headers:
+          Pagination-Next:
+            $ref: "#/components/headers/PaginationNext"
+          Link:
+            $ref: "#/components/headers/Link"
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: "#/components/schemas/TeamAttributes"
+            example:
+              <%= FactoryBot.get_examples(:team, version: @version) %>
+
+/teams/{id}:
+  get:
+    tags:
+      - Team
+    summary: "Fetch Team"
+    operationId: fetchTeam
+    parameters:
+      - $ref: "#/components/parameters/id"
+    responses:
+      "404":
+        description: "Not Found"
+      "200":
+        description: "OK"
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TeamAttributes"
+            example:
+              <%= FactoryBot.get_example(:team, version: @version) %>
+  put:
+    tags:
+      - Team
+    summary: "Update Team"
+    operationId: updateTeam
+    parameters:
+      - $ref: "#/components/parameters/id"
+    requestBody:
+      description: "Information about updated fields in Team"
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              team:
+                type: object
+                $ref: "#/components/schemas/TeamParameters"
+          example:
+            <%= FactoryBot.put_parameters(:team, version: @version) %>
+    responses:
+      "404":
+        description: "Not Found"
+      "200":
+        description: "OK"
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TeamAttributes"
+            example:
+              <%= FactoryBot.put_example(:team, version: @version) %>

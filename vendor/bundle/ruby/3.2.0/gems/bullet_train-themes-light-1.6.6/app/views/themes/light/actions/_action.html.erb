@@ -1,0 +1,77 @@
+<div class="py-4 px-8 w-full space-y-3">
+  <div class="flex space-x-4">
+    <% if action.is_a?(Actions::TracksCreator) %>
+      <div class="flex-0">
+        <%= render "shared/memberships/photo", membership: action.created_by, size: 7 %>
+      </div>
+    <% end %>
+    <div class="flex-1">
+      <div class="flex">
+        <div class="flex-1 space-y-4 py-1">
+          <div>
+            <%= action.label_string %>
+          </div>
+        </div>
+        <div class="flex-0">
+          <%= partial.actions if partial.actions? %>
+          <% if action.is_a?(Actions::RequiresApproval) %>
+            <% if !action.approved? && can?(:approve, action) %>
+              <%= button_to t("#{action.class.name.pluralize.underscore}.buttons.shorthand.approve"), [:approve, :account, action], method: :post, class: 'button-secondary button-smaller' %>
+            <% end %>
+          <% end %>
+          <% if can? :read, action %>
+            <%= link_to t("#{action.class.name.pluralize.underscore}.buttons.shorthand.show"), [:account, action], class: 'button-secondary button-smaller' %>
+          <% end %>
+          <% if can? :edit, action %>
+            <%= link_to t("#{action.class.name.pluralize.underscore}.buttons.shorthand.edit"), [:edit, :account, action], class: 'button-secondary button-smaller' %>
+          <% end unless action.started_at # TODO This is the wrong way to do this, we need to do this in `roles.yml` when we can. %>
+          <% if can? :destroy, action %>
+            <%= button_to t("#{action.class.name.pluralize.underscore}.buttons.shorthand.destroy"), [:account, action], method: :delete, data: { confirm: t("#{action.class.name.pluralize.underscore}.buttons.confirmations.destroy", model_locales(action)) }, class: 'button-secondary button-smaller' %>
+          <% end %>
+        </div>
+      </div>
+
+      <% if action.completed? %>
+        <% if action.is_a?(Actions::HasProgress) %>
+          <div class="uppercase text-xs text-slate-400">
+            <%= t('action_models.processed_of', performed_count: action.performed_count, target_count: action.target_count, at: display_date_and_time(action.completed_at)) %>
+          </div>
+        <% else %>
+          <div class="uppercase text-xs text-slate-400">
+            <%= t('action_models.processed', at: display_date_and_time(action.completed_at)) %>
+          </div>
+        <% end %>
+
+      <% elsif action.is_a?(Actions::RequiresApproval) && !action.approved? %>
+        <div class="uppercase text-xs text-slate-400">
+          <%= t('action_models.awaiting') %>
+        </div>
+
+      <% elsif action.is_a?(Actions::SupportsScheduling) && action.scheduled_for && !action.started? %>
+        <div class="uppercase text-xs text-slate-400">
+          <%= t('action_models.scheduled_for', at: display_date_and_time(action.scheduled_for)) %>
+        </div>
+
+      <% elsif action.is_a?(Actions::HasProgress) && action.started? %>
+        <div class="mt-3">
+          <%= render "shared/attributes/progress_bar", object: action, attribute: :performed_count, total: :target_count %>
+        </div>
+
+        <div class="mt-2 uppercase text-xs text-slate-400">
+          <%= t('action_models.processing_of', performed_count: action.performed_count, target_count: action.target_count) %>
+        </div>
+
+      <% elsif action.is_a?(Actions::HasProgress) %>
+        <div class="uppercase text-xs text-slate-400">
+          <%= t('action_models.preparing_to_process_of', performed_count: action.performed_count, target_count: action.target_count) %>
+        </div>
+
+      <% else %>
+        <div class="uppercase text-xs text-slate-400">
+          <%= t('action_models.preparing_to_process') %>
+        </div>
+
+      <% end %>
+    </div>
+  </div>
+</div>

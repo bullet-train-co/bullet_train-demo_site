@@ -1,0 +1,18 @@
+current directory: /home/runner/work/bullet_train-demo_site/bullet_train-demo_site/vendor/bundle/ruby/3.2.0/gems/bootsnap-1.16.0/ext/bootsnap
+/opt/hostedtoolcache/Ruby/3.2.2/x64/bin/ruby extconf.rb
+creating Makefile
+
+current directory: /home/runner/work/bullet_train-demo_site/bullet_train-demo_site/vendor/bundle/ruby/3.2.0/gems/bootsnap-1.16.0/ext/bootsnap
+make DESTDIR\= sitearchdir\=./.gem.20231017-1797-uzlorm sitelibdir\=./.gem.20231017-1797-uzlorm clean
+
+current directory: /home/runner/work/bullet_train-demo_site/bullet_train-demo_site/vendor/bundle/ruby/3.2.0/gems/bootsnap-1.16.0/ext/bootsnap
+make DESTDIR\= sitearchdir\=./.gem.20231017-1797-uzlorm sitelibdir\=./.gem.20231017-1797-uzlorm
+compiling bootsnap.c
+linking shared-object bootsnap/bootsnap.so
+
+current directory: /home/runner/work/bullet_train-demo_site/bullet_train-demo_site/vendor/bundle/ruby/3.2.0/gems/bootsnap-1.16.0/ext/bootsnap
+make DESTDIR\= sitearchdir\=./.gem.20231017-1797-uzlorm sitelibdir\=./.gem.20231017-1797-uzlorm install
+/usr/bin/install -c -m 0755 bootsnap.so ./.gem.20231017-1797-uzlorm/bootsnap
+
+current directory: /home/runner/work/bullet_train-demo_site/bullet_train-demo_site/vendor/bundle/ruby/3.2.0/gems/bootsnap-1.16.0/ext/bootsnap
+make DESTDIR\= sitearchdir\=./.gem.20231017-1797-uzlorm sitelibdir\=./.gem.20231017-1797-uzlorm clean

@@ -1,0 +1,31 @@
+<div class="border border-slate-300 dark:border-opacity-10 rounded-md bg-slate-50 dark:bg-opacity-10">
+  <% if partial.title? || partial.description? || partial.body? %>
+    <div class="py-4 px-5 space-y">
+      <% if partial.title? || partial.description? %>
+        <div class="space-y-2">
+          <% if partial.title? %>
+            <h2 class="text-base font-semibold">
+              <%= partial.title %>
+            </h2>
+          <% end %>
+
+          <% if partial.description? %>
+            <p class="text-slate-400 font-light leading-normal">
+              <%= partial.description %>
+            </p>
+          <% end %>
+        </div>
+      <% end %>
+
+      <% if partial.body? %>
+        <div class="space-y">
+          <%= partial.body %>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+
+  <div>
+    <%= partial.raw_body %>
+  </div>
+</div>

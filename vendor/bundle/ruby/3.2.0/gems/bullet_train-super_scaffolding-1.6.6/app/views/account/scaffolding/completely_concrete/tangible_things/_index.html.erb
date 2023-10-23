@@ -1,0 +1,67 @@
+<% tangible_things = tangible_things.accessible_by(current_ability) %>
+<% absolutely_abstract_creative_concept = @absolutely_abstract_creative_concept || @creative_concept %>
+<% context ||= absolutely_abstract_creative_concept %>
+<% collection ||= :completely_concrete_tangible_things %>
+<% hide_actions ||= false %>
+<% hide_back ||= false %>
+
+<% pagy ||= nil %>
+<% pagy, tangible_things = pagy(tangible_things, page_param: :tangible_things_page) unless pagy %>
+
+<%= action_model_select_controller do %>
+  <% cable_ready_updates_for context, collection do %>
+    <%= render 'account/shared/box', pagy: pagy do |box| %>
+      <% box.title t(".contexts.#{context.class.name.underscore}.header") %>
+      <% box.description do %>
+        <%= t(".contexts.#{context.class.name.underscore}.description#{"_empty" unless tangible_things.any?}") %>
+        <%= render "shared/limits/index", model: tangible_things.model %>
+      <% end %>
+
+      <% box.table do %>
+        <% if tangible_things.any? %>
+          <table class="table">
+            <thead>
+              <tr>
+                <%= render "shared/tables/select_all" %>
+                <%# 🚅 skip this section when scaffolding. %>
+                <th><%= t('.fields.text_field_value.heading') %></th>
+                <th><%= t('.fields.boolean_button_value.heading') %></th>
+                <th><%= t('.fields.button_value.heading') %></th>
+                <th><%= t('.fields.multiple_button_values.heading') %></th>
+                <%# 🚅 stop any skipping we're doing now. %>
+                <%# 🚅 super scaffolding will insert new field headers above this line. %>
+                <th><%= t('.fields.created_at.heading') %></th>
+                <th class="text-right"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <%= render partial: 'account/scaffolding/completely_concrete/tangible_things/tangible_thing', collection: tangible_things %>
+            </tbody>
+          </table>
+        <% end %>
+      <% end %>
+
+      <% box.actions do %>
+        <% unless hide_actions %>
+          <% if context == absolutely_abstract_creative_concept %>
+            <% if can? :create, Scaffolding::CompletelyConcrete::TangibleThing.new(absolutely_abstract_creative_concept: absolutely_abstract_creative_concept) %>
+              <%= link_to t('.buttons.new'), [:new, :account, absolutely_abstract_creative_concept, :completely_concrete_tangible_thing], class: "#{first_button_primary(:completely_concrete_tangible_thing)} new" %>
+            <% end %>
+          <% end %>
+
+          <%# 🚅 super scaffolding will insert new targets one parent action model buttons above this line. %>
+          <%# 🚅 super scaffolding will insert new bulk action model buttons above this line. %>
+          <%= render "shared/bulk_action_select" if tangible_things.many? %>
+
+          <% unless hide_back %>
+            <%= link_to t('global.buttons.back'), [:account, context], class: "#{first_button_primary(:completely_concrete_tangible_thing)} back" %>
+          <% end %>
+        <% end %>
+      <% end %>
+
+      <% box.raw_footer do %>
+        <%# 🚅 super scaffolding will insert new action model index views above this line. %>
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>

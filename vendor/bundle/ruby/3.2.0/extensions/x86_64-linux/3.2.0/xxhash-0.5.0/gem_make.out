@@ -1,0 +1,19 @@
+current directory: /home/runner/work/bullet_train-demo_site/bullet_train-demo_site/vendor/bundle/ruby/3.2.0/gems/xxhash-0.5.0/ext/xxhash
+/opt/hostedtoolcache/Ruby/3.2.2/x64/bin/ruby extconf.rb
+creating Makefile
+
+current directory: /home/runner/work/bullet_train-demo_site/bullet_train-demo_site/vendor/bundle/ruby/3.2.0/gems/xxhash-0.5.0/ext/xxhash
+make DESTDIR\= sitearchdir\=./.gem.20231017-1797-mlwtte sitelibdir\=./.gem.20231017-1797-mlwtte clean
+
+current directory: /home/runner/work/bullet_train-demo_site/bullet_train-demo_site/vendor/bundle/ruby/3.2.0/gems/xxhash-0.5.0/ext/xxhash
+make DESTDIR\= sitearchdir\=./.gem.20231017-1797-mlwtte sitelibdir\=./.gem.20231017-1797-mlwtte
+compiling libxxhash.c
+compiling xxhash.c
+linking shared-object xxhash/xxhash.so
+
+current directory: /home/runner/work/bullet_train-demo_site/bullet_train-demo_site/vendor/bundle/ruby/3.2.0/gems/xxhash-0.5.0/ext/xxhash
+make DESTDIR\= sitearchdir\=./.gem.20231017-1797-mlwtte sitelibdir\=./.gem.20231017-1797-mlwtte install
+/usr/bin/install -c -m 0755 xxhash.so ./.gem.20231017-1797-mlwtte/xxhash
+
+current directory: /home/runner/work/bullet_train-demo_site/bullet_train-demo_site/vendor/bundle/ruby/3.2.0/gems/xxhash-0.5.0/ext/xxhash
+make DESTDIR\= sitearchdir\=./.gem.20231017-1797-mlwtte sitelibdir\=./.gem.20231017-1797-mlwtte clean

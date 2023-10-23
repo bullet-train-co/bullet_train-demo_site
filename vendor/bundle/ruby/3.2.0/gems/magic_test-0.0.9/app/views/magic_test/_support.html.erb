@@ -1,0 +1,9 @@
+<% if Rails.env.test? && ENV['MAGIC_TEST'].present? %>
+  <%= render 'magic_test/context_menu' %>
+  <%= render 'magic_test/key_codes' %>
+  <%= render 'magic_test/storage' %>
+  <%= render 'magic_test/finders' %>
+  <%= render 'magic_test/mutation_observer' %>
+  <%= render 'magic_test/javascript_helpers' %>
+  <%= render 'magic_test/listeners' %>
+<% end %>

@@ -1,0 +1,23 @@
+@import "./utilities/billing";
+
+@layer utilities {
+  .space-y {
+    @apply space-y-5;
+  }
+
+  .space-x {
+    @apply space-x-3;
+  }
+
+  .gap-y {
+    @apply gap-y-5;
+  }
+
+  .gap-x {
+    @apply gap-x-4;
+  }
+ 
+  [hidden] {
+    display: none !important;
+  }
+}

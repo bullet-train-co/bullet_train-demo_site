@@ -1,0 +1,9 @@
+<% object ||= current_attributes_object %>
+<% strategy ||= current_attributes_strategy || :none %>
+<% url ||= nil %>
+
+<% if object.public_send(attribute).present? %>
+  <%= render 'shared/attributes/attribute', object: object, attribute: attribute, strategy: strategy, url: url do %>
+    <%= link_to object.public_send(attribute), "mailto:#{object.public_send(attribute)}" %>
+  <% end %>
+<% end %>

@@ -1,0 +1,6 @@
+<%= render 'account/shared/page' do |page| %>
+  <% page.title t('.section') %>
+  <% page.body.render 'index', creative_concepts: @creative_concepts do %>
+    <%= render @teams %>
+  <% end %>
+<% end %>

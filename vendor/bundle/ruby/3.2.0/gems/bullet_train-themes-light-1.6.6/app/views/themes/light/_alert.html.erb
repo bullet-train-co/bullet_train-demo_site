@@ -1,0 +1,19 @@
+<% color ||= "yellow" %>
+<% tighter ||= false %>
+
+<% 
+case color.to_sym
+when :yellow
+  div_classes = "bg-amber-100 border-amber-200"
+  header_classes = "text-amber-800"
+when :red
+  div_classes = "bg-red-100 dark:bg-red-900 border-red-200 dark:border-red-700"
+  header_classes = "text-red-900 dark:text-red-100"
+end
+%>
+
+<div class="rounded-md border <%= div_classes %> py-4 px-5 mb-3">
+  <h3 class="text-sm  <%= header_classes %> font-light">
+    <%= yield %>
+  </h3>
+</div>

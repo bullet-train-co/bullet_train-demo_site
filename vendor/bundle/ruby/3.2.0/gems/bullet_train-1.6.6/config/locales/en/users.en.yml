@@ -1,0 +1,134 @@
+en:
+  users: &users
+    label: &label Users
+    breadcrumbs:
+      label: *label
+    buttons: &buttons
+      update_profile: Update Profile
+      update_email_and_password: Update Email & Password
+    edit:
+      section: "%{users_possessive} Profile"
+      profile:
+        header: Update Your Profile
+        description: You can update the way your name is displayed and your time zone.
+      email_and_password:
+        header: Update Your Email Address & Password
+        description: When you change these credentials we'll email you a confirmation.
+        new_password: If you don't want to change your password, leave these two fields blank.
+        current_password: For security reasons we need you to confirm your current password.
+        confirm_new_password: Confirm New Password
+      two_factor:
+        header: Two-Factor Authentication
+        description_enabled: 2FA is currently enabled for your account.
+        description_disabled: You can increase the security of your account by enabling two-factor authentication.
+        verification_fail: Verification failed. You can try enabling again. Please make sure you scan the new QR code with your Authenticator app.
+        verification_success: Success! Thanks for verifying. 2FA is now enabled.
+        warning: "In order to enable two-factor authentication, you <strong>must</strong> install an Authenticator app and <strong>enter your Verification Code from the app below</strong>. 2FA will not be enabled until you do so. This is to avoid you getting locked out of your account."
+        instructions: "Install <a href='https://authy.com/download/' target='_blank'>Authy</a> or <a href='https://support.google.com/accounts/answer/1066447'>Google Authentication</a> on your phone and scan the barcode displayed below."
+        recovery_codes: "You can also make a copy of the following recovery codes. Each one can help you get back into your account once should you lose access to the device you're using for two-factor authentication."
+        buttons:
+          enable: Enable
+          disable: Disable
+          verify: Verify
+      buttons: *buttons
+    notifications:
+      updated: User was successfully updated.
+    fields: &fields
+      id:
+        _: &id Team ID
+        label: *id
+        heading: *id
+      name:
+        heading: Name
+      first_name:
+        _: &first_name First Name
+        label: *first_name
+        heading: *first_name
+      last_name:
+        _: &last_name Last Name
+        label: *last_name
+        heading: *last_name
+      email:
+        _: &email Email Address
+        label: *email
+        heading: *email
+      time_zone:
+        _: &time_zone Your Time Zone
+        label: *time_zone
+        heading: *time_zone
+      profile_photo_id:
+        _: &profile_photo_id Profile Photo
+        label: *profile_photo_id
+        heading: *profile_photo_id
+      profile_photo:
+        _: &profile_photo Profile Photo
+        label: *profile_photo
+        heading: *profile_photo
+      current_password:
+        label: Current Password
+      password:
+        _: &password Password
+        label: *password
+      password_confirmation:
+        _: &password_confirmation Password Confirmation
+        label: Confirm Password
+      otp_attempt:
+        _: &otp_attempt Your Verification Code
+        label: *otp_attempt
+        heading: *otp_attempt
+      locale:
+        _: &locale Language
+        label: *locale
+        heading: *locale
+        help: By default the interface language will adjust based on each team's language setting, but you can set a global personal preference for your account here.
+      # 🚅 super scaffolding will insert new fields above this line.
+      created_at:
+        _: &created_at Signed Up At
+        heading: *created_at
+      updated_at:
+        _: &updated_at Updated At
+        heading: *updated_at
+    # this is how we define customizations to fields for a specific namespace.
+    _: &self
+      email:
+        label: Your Email Address
+      password:
+        label: Your Password
+      first_name:
+        label: Your First Name
+      last_name:
+        label: Your Last Name
+      otp_attempt:
+        label: Two-Factor Authentication Code
+        help: You can find this in the authenticator application you configured when adding 2FA to your account.
+    self:
+      <<: [*self, *fields]
+    _1: &sign_up
+      password:
+        label: Set Password
+    sign_up:
+      <<: [*sign_up, *self, *fields]
+    _2: &update_self
+      password:
+        label: New Password
+    update_self:
+      <<: [*update_self, *self, *fields]
+    form:
+      buttons: *buttons
+  account:
+    users: *users
+  activerecord:
+    attributes:
+      user:
+        first_name: *first_name
+        last_name: *last_name
+        email: *email
+        profile_photo_id: *profile_photo_id
+        profile_photo: *profile_photo
+        time_zone: *time_zone
+        locale: *locale
+        # 🚅 super scaffolding will insert new activerecord attributes above this line.
+        password: *password
+        password_confirmation: *password_confirmation
+        created_at: *created_at
+        updated_at: *updated_at

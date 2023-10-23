@@ -1,0 +1,3 @@
+ignore:                 # default: []
+  - 'lib/magic_test/support.rb':
+    - Lint/Debugger

@@ -1,0 +1,83 @@
+<% yield %>
+
+<%
+form ||= current_fields_form
+options ||= {}
+other_options ||= {}
+%>
+
+<%= form.fields_for(method) do |address_form| %>
+  <% with_field_settings form: address_form do %>
+  
+    <%= render 'shared/fields/super_select',
+      method: :country_id,
+      choices: populate_country_options,
+      options: {include_blank: true}, 
+      other_options: {search: true, wrapper_class: "col-span-2"},
+      html_options: {data: {}},
+      wrapper_options: {
+        data: {
+          'controller': "dependable",
+          'action': '$change->dependable#updateDependents',
+          'dependable-dependents-selector-value': "##{form.field_id(:country, :dependent_fields)}"
+        }
+      }
+    %>
+    
+    <%= render 'shared/fields/text_field', method: :address_one %>
+    <%= render 'shared/fields/text_field', method: :address_two %>
+    
+    <div class="grid grid-cols-1 gap-y gap-x sm:grid-cols-3">
+      <div class="sm:col-span-1">
+        <%= render 'shared/fields/text_field', method: :city,
+          other_options: {wrapper_class: "col-span-2 lg:col-span-1"}
+        %>
+      </div>
+      <div class="sm:col-span-2">
+        <%= render "shared/fields/dependent_fields_frame", 
+          id: form.field_id(:country, :dependent_fields),
+          form: address_form,
+          dependable_fields: [:country_id],
+          html_options: { class: "block space-y-5" } do |dependent_fields_controller_name|
+        %>
+        
+          <div class="grid grid-cols-1 gap-y gap-x sm:grid-cols-2">
+            <div class="sm:col-span-1">
+              <%= render 'shared/fields/super_select',
+                method: :region_id,
+                choices: populate_region_options(address_form),
+                options: {include_blank: true },
+                other_options: {
+                  search: true,
+                  wrapper_class: "col-span-2 lg:col-span-1",
+                  label: admin_division_label_for(address_form)
+                },
+                html_options: {
+                  disabled: address_form.object.country_id.nil?,
+                  data: {
+                    "#{dependent_fields_controller_name}-target": "field"
+                  }
+                }
+              %>
+            </div>
+            
+            <div class="sm:col-span-1">
+              <%= render 'shared/fields/text_field', method: :postal_code,
+                options: {
+                  data: {
+                    "#{dependent_fields_controller_name}-target": "field"
+                  }
+                },
+                other_options: {
+                  wrapper_class: "col-span-2 lg:col-span-1",
+                  label: postal_code_label_for(address_form)
+                }
+              %>
+            </div>
+          </div>
+        
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+<% end %>

@@ -1,0 +1,18 @@
+<% url ||= nil %>
+<% strategy ||= current_attributes_strategy || :none %>
+
+<% body = link_to_if url.present?, partial.body, url %>
+
+<% case strategy %>
+<% when :label %>
+  <div>
+    <label class="block text-2xs uppercase font-semibold py-2 dark:text-white">
+      <%= partial.heading %>
+    </label>
+    <div class="dark:text-slate-400">
+      <%= body %>
+    </div>
+  </div>
+<% else %>
+  <%= body %>
+<% end %>
