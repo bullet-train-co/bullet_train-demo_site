@@ -30,7 +30,8 @@ class ActionModelsSystemTest < ApplicationSystemTestCase
     "Projects::ArchiveAction",
     "Listings::PublishAction",
     "Notifications::MarkAllAsReadAction",
-    "Articles::CsvImportAction"
+    "Articles::CsvImportAction",
+    "Visitors::CsvExportAction"
   ].each do |class_name|
     class_name.constantize
   rescue
@@ -41,7 +42,7 @@ class ActionModelsSystemTest < ApplicationSystemTestCase
   if defined?(Projects::ArchiveAction)
     # This error message is displayed for all actions, not just `targets-many`.
     test "the proper error message is displayed for unneeded namespaces" do
-      output = `bin/super-scaffold action-model:targets-many Project::Publish Project Team`
+      output = `rails g super_scaffold:action_models:targets_many Project::Publish Project Team`
       assert output.include?("When creating an Action Model, you don't have to namespace the action")
     end
 
